@@ -1,7 +1,7 @@
 import React from "react"
 import {Image} from "react-native"
 import {Container} from "native-base"
-import LoadingGif from "../../howmuch-pos-core/assets/loading.gif"
+// import LoadingGif from "../../howmuch-pos-core/assets/loading.gif"
 
 function LoadingScreen(){
   return(
@@ -11,9 +11,9 @@ function LoadingScreen(){
         justifyContent:"center",
         backgroundColor: "#f5f5f5"
       }}>
-        <Image
-            style={{width: "100%", height: "20%"}}
-            source={LoadingGif} />
+        {/*<Image*/}
+        {/*    style={{width: "100%", height: "20%"}}*/}
+        {/*    source={LoadingGif} />*/}
       </Container>
   )
 }

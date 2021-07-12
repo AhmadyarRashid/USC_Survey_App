@@ -1,5 +1,4 @@
-import React, {useState, useEffect} from 'react';
-import {Modal} from 'react-native';
+import React from 'react';
 import {
   Button,
   Text,
@@ -13,82 +12,11 @@ import {
   Icon,
   Body,
   Title,
-  Item, Input, Label, View,
 } from 'native-base';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Colors} from '../../utils/colors';
 
-function DrawerModal({isOpen = true, handlerCloseModal}) {
-  const [cashDrawerTitle, setCashDrawerTitle] = useState('');
-  useEffect(() => {
-    (async function() {
-      const drawerTitle = await AsyncStorage.getItem("cashDrawerTitle")
-      if (drawerTitle){
-        setCashDrawerTitle(drawerTitle)
-      }
-    })()
-  });
-  return (
-      <Modal
-          animationType="slide"
-          transparent={true}
-          visible={isOpen}
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-          onRequestClose={() => {
-            alert('Modal has been closed.');
-            handlerCloseModal();
-          }}
-      >
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-          <View style={{
-            margin: 20,
-            backgroundColor: 'white',
-            borderRadius: 20,
-            padding: 35,
-            alignItems: 'center',
-            // shadowColor: '#000',
-            shadowOffset: {
-              width: 0,
-              height: 2,
-            },
-            shadowOpacity: 0.25,
-            shadowRadius: 4,
-            elevation: 5,
-          }}>
-            <Item floatingLabel>
-              <Label>Cash Drawer Title</Label>
-              <Input
-                  value={cashDrawerTitle}
-                  onChangeText={async text => {
-                    await setCashDrawerTitle(text);
-                    await AsyncStorage.setItem('cashDrawerTitle', text);
-                  }}
-              />
-            </Item>
-            <Item style={{marginTop: 22}}>
-              <Button
-                  style={{backgroundColor: Colors.primary}}
-                  onPress={() => handlerCloseModal()}
-              >
-                <Text>Save</Text>
-              </Button>
-            </Item>
-          </View>
-        </View>
-      </Modal>
-  );
-}
-
 function SettingScreen({navigation, ...props}) {
-  const [isModalOpen, setModalOpen] = useState(false);
-
-  const handlerCloseModal = () => {
-    setModalOpen(false);
-  };
 
   const logoutHandler = async () => {
     await AsyncStorage.removeItem('userInfo');
@@ -100,10 +28,6 @@ function SettingScreen({navigation, ...props}) {
   return (
       <React.Fragment>
         <Container>
-          <DrawerModal
-              isOpen={isModalOpen}
-              handlerCloseModal={handlerCloseModal}
-          />
           <Header>
             <Left>
               <Button onPress={() => navigation.goBack()} transparent>
@@ -117,7 +41,7 @@ function SettingScreen({navigation, ...props}) {
           </Header>
           <Content>
             <List>
-              <ListItem onPress={() => navigation.navigate('PrinterSetting')}>
+              <ListItem>
                 <Left>
                   <Text>Printer</Text>
                 </Left>
@@ -125,15 +49,7 @@ function SettingScreen({navigation, ...props}) {
                   <Icon name="arrow-forward"/>
                 </Right>
               </ListItem>
-              {/*<ListItem>*/}
-              {/*  <Left>*/}
-              {/*    <Text>Barcode</Text>*/}
-              {/*  </Left>*/}
-              {/*  <Right>*/}
-              {/*    <Icon name="arrow-forward"/>*/}
-              {/*  </Right>*/}
-              {/*</ListItem>*/}
-              <ListItem onPress={() => setModalOpen(true)}>
+              <ListItem>
                 <Left>
                   <Text>Cash Drawer</Text>
                 </Left>
