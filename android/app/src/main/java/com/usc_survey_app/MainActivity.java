@@ -1,4 +1,4 @@
-package com.howmuchpos_app;
+package com.usc_survey_app;
 
 import com.facebook.react.ReactActivity;
 
