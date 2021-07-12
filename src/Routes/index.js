@@ -34,7 +34,7 @@ function App() {
             screenOptions={{
               headerShown: false
             }}
-            initialRouteName="Review"
+            initialRouteName="login"
         >
           <Stack.Screen
               name="login"

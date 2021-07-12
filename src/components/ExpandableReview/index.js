@@ -1,22 +1,25 @@
 import React from "react"
 import {View, Text, Icon, Accordion, CheckBox} from "native-base"
 import styles from "./styles";
+import {Colors} from "../../utils/colors";
 
 function ExpandableReview({data=[], onCheckBoxHandler}){
 
   const _renderHeader = (item, expanded) => {
+    const {checked = true, id} = item;
     return (
       <View style={styles.header}>
         <CheckBox
-          checked={item.checked}
-          onPress={() => onCheckBoxHandler(item.id, !item.checked)}
+          checked={checked}
+          color={Colors.primary}
+          onPress={() => onCheckBoxHandler(id, !checked)}
         />
         <Text style={styles.headerText}>
-          {" "}{item.title}
+          {" "}{item.itemName}
         </Text>
         {expanded
-          ? <Icon style={styles.headerIcon} name="remove-circle" />
-          : <Icon style={styles.headerIcon} name="add-circle" />}
+          ? <Icon style={styles.headerIcon} name="arrow-up" />
+          : <Icon style={styles.headerIcon} name="arrow-down" />}
       </View>
     );
   }
@@ -25,7 +28,7 @@ function ExpandableReview({data=[], onCheckBoxHandler}){
       <Text
         style={styles.contentMain}
       >
-        {item.content}
+        {item.description}
       </Text>
     );
   }
@@ -33,7 +36,7 @@ function ExpandableReview({data=[], onCheckBoxHandler}){
   return(
     <Accordion
       dataArray={data}
-      expanded={[0]}
+      expanded={[]}
       animation={true}
       renderHeader={_renderHeader}
       renderContent={_renderContent}

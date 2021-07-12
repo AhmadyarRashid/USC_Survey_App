@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import {Colors} from "../../utils/colors";
 
 const styles = StyleSheet.create({
   root: {
@@ -8,12 +9,15 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row'
   },
-  icon: {
-    fontSize: 18,
-    marginRight: 6,
+  category: {
+    marginBottom: 20
   },
-  picker: {
-    marginTop: 20
+  categoryTitle: {
+    textAlign: 'center',
+    fontWeight: 'bold',
+    color: Colors.primary,
+    fontSize: 24,
+    marginBottom: 12,
   }
 });
 
