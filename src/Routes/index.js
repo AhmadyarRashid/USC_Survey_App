@@ -1,12 +1,15 @@
-// In App.js in a new project
 import * as React from 'react';
+
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+
 import LoginScreen from '../screens/Login';
 import DashboardScreen from '../screens/Dashboard';
-import {Colors} from "../utils/colors"
+import ReviewScreen from "../screens/Review"
 import SettingScreen from '../screens/Setting';
+
+import {Colors} from "../utils/colors"
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -19,7 +22,7 @@ function DrawerScreensRoutes(props) {
           }}
           initialRouteName="Home">
         <Drawer.Screen name="Home" component={newProps => <DashboardScreen {...props} {...newProps} />} />
-        <Drawer.Screen name="Setting" component={newProps => <SettingScreen {...props} {...newProps} />} />
+        <Drawer.Screen name="Settings" component={newProps => <SettingScreen {...props} {...newProps} />} />
       </Drawer.Navigator>
   )
 }
@@ -31,7 +34,7 @@ function App() {
             screenOptions={{
               headerShown: false
             }}
-            initialRouteName="login"
+            initialRouteName="Review"
         >
           <Stack.Screen
               name="login"
@@ -47,6 +50,20 @@ function App() {
                   fontWeight: 'bold',
                 },
               }}
+          />
+          <Stack.Screen
+            name="Review"
+            component={ReviewScreen}
+            options={{
+              title: 'Review',
+              headerStyle: {
+                backgroundColor: Colors.primary,
+              },
+              headerTintColor: Colors.white,
+              headerTitleStyle: {
+                fontWeight: 'bold',
+              },
+            }}
           />
           <Stack.Screen
               name="Dashboard"

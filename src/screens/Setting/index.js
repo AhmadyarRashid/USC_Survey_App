@@ -35,25 +35,12 @@ function SettingScreen({navigation, ...props}) {
               </Button>
             </Left>
             <Body>
-              <Title>Setting</Title>
+              <Title>Settings</Title>
             </Body>
             <Right/>
           </Header>
           <Content>
             <List>
-              <ListItem>
-                <Left>
-                  <Text>Printer</Text>
-                </Left>
-                <Right>
-                  <Icon name="arrow-forward"/>
-                </Right>
-              </ListItem>
-              <ListItem>
-                <Left>
-                  <Text>Cash Drawer</Text>
-                </Left>
-              </ListItem>
               <ListItem>
                 <Left>
                   <Text>Build Version</Text>

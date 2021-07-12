@@ -38,18 +38,18 @@ function DashboardHeaderComponent({navigation, ...props}) {
           <Title style={{color: 'black'}}>Dashboard</Title>
         </Body>
         <Right>
-          <Icon
-              onPress={() => syncHandler()}
-              name="sync"
-              type="MaterialCommunityIcons"
-              style={styles.icon}
-          />
           {/*<Icon*/}
-          {/*    onPress={() => logoutHandler()}*/}
+          {/*    onPress={() => syncHandler()}*/}
           {/*    name="sync"*/}
           {/*    type="MaterialCommunityIcons"*/}
           {/*    style={styles.icon}*/}
           {/*/>*/}
+          <Icon
+              onPress={() => logoutHandler()}
+              name="logout"
+              type="MaterialCommunityIcons"
+              style={styles.icon}
+          />
         </Right>
       </Header>
   );
