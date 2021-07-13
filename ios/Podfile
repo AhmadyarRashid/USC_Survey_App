@@ -8,14 +8,6 @@ target 'howmuchPOS_App' do
 
   use_react_native!(:path => config["reactNativePath"])
 
-  pod 'react-native-background-downloader', :path => '../node_modules/react-native-background-downloader'
-
-  pod 'RNFS', :path => '../node_modules/react-native-fs'
-
-  pod 'RNZipArchive', :path => '../node_modules/react-native-zip-archive'
-
-  pod 'react-native-sqlite-storage', :path => '../node_modules/react-native-sqlite-storage'
-
   target 'howmuchPOS_AppTests' do
     inherit! :complete
     # Pods for testing

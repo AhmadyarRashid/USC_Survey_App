@@ -34,7 +34,7 @@ function App() {
             screenOptions={{
               headerShown: false
             }}
-            initialRouteName="login"
+            initialRouteName="Dashboard"
         >
           <Stack.Screen
               name="login"

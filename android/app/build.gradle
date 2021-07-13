@@ -129,7 +129,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.howmuchpos_app"
+        applicationId "com.usc_survey_app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

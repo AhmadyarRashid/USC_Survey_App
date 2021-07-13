@@ -4,7 +4,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import RCTNetworking from 'react-native/Libraries/Network/RCTNetworking';
 import {Colors} from '../../utils/colors';
 import styles from './styles';
-import Toast from 'react-native-toast-message';
 
 function DashboardHeaderComponent({navigation, ...props}) {
 
@@ -15,15 +14,6 @@ function DashboardHeaderComponent({navigation, ...props}) {
     await AsyncStorage.removeItem('userInfo');
     AsyncStorage.clear().then(response => {
       navigation.navigate('login');
-    });
-  };
-
-  const syncHandler = async () => {
-    Toast.show({
-      type: 'info',
-      position: 'top',
-      text1: 'Product sync initiated',
-      autoHide: true,
     });
   };
 

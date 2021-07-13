@@ -1,5 +1,5 @@
 import React, {Fragment, useState} from 'react';
-import {Text, Container, Content, Form, Item, Picker, Icon, View, Button} from 'native-base';
+import {Text, Container, Content, Form, Icon, View, Button} from 'native-base';
 import HeaderComponent from "./header";
 import SingleOption from "../../components/SelectOption"
 import DropDown from "../../components/DropDown";
