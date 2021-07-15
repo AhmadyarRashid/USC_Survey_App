@@ -1,12 +1,12 @@
 import React from 'react';
 import {Image} from 'react-native';
-import {Container, View, Text, Content, Item, Input, Button, Spinner, Toast, NativeBase} from 'native-base';
+import {Container, View, Text, Content, Item, Input, Button, Spinner} from 'native-base';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoadingScreen from '../Splash';
 import {loginAPI} from "../../API/user"
 import Logo from "../../assets/usc.jpg"
 import styles from './styles';
-import {showMessage} from "react-native-flash-message";
+import Toast from 'react-native-simple-toast';
 
 class LoginComponent extends React.Component {
 
@@ -53,20 +53,12 @@ class LoginComponent extends React.Component {
     const {email, password} = this.state;
 
     if (email.length < 4 || email.indexOf("@") === -1) {
-      showMessage({
-        message: "Please enter correct email",
-        type: "danger",
-        duration: 3000,
-      });
+      Toast.showWithGravity("Please enter correct email", Toast.SHORT, Toast.TOP);
       return;
     }
 
     if (password.length === 0) {
-      showMessage({
-        message: "Please enter password",
-        type: "danger",
-        duration: 3000,
-      });
+      Toast.showWithGravity("Please enter password", Toast.SHORT, Toast.TOP);
       return;
     }
 
@@ -94,11 +86,7 @@ class LoginComponent extends React.Component {
           this.setState({
             isLoading: false,
           });
-          showMessage({
-            message,
-            type: "danger",
-            duration: 3000,
-          });
+          Toast.showWithGravity(message, Toast.SHORT, Toast.TOP);
         }
       })
       .catch(error => {
