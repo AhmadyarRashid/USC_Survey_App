@@ -89,7 +89,7 @@ function Dashboard(props) {
 
             <View style={{marginTop: 20}}>
               <Button
-                onPress={() => navigation.navigate("Review")}
+                onPress={() => props.navigation.navigate("Review")}
                 block
                 success
               >
