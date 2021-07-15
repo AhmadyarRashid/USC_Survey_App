@@ -6,7 +6,7 @@ import LoadingScreen from '../Splash';
 import {loginAPI} from "../../API/user"
 import Logo from "../../assets/usc.jpg"
 import styles from './styles';
-import { showMessage } from "react-native-flash-message";
+import {showMessage} from "react-native-flash-message";
 
 class LoginComponent extends React.Component {
 
@@ -24,7 +24,10 @@ class LoginComponent extends React.Component {
     let data = await AsyncStorage.getItem('userInfo');
     setTimeout(() => {
       if (data) {
-        this.props.navigation.navigate('Dashboard');
+        data = JSON.parse(data)
+        this.props.navigation.navigate('Dashboard', {
+          id: data.userId
+        });
       }
     }, 3000);
     setTimeout(() => {
@@ -58,7 +61,7 @@ class LoginComponent extends React.Component {
       return;
     }
 
-    if (password.length === 0){
+    if (password.length === 0) {
       showMessage({
         message: "Please enter password",
         type: "danger",

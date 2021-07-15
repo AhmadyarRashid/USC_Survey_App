@@ -9,3 +9,19 @@ export const loginAPI = (email, password) => {
       .catch(error => reject(error.response.data))
   })
 }
+
+export const profileAPI = userId => {
+  return new Promise((resolve, reject) => {
+    axios.get(`${baseEndPointUrl}/user/profile/${userId}`,)
+      .then(response => resolve(response.data))
+      .catch(error => reject(error.response.data))
+  })
+}
+
+export const getNRTCItems = () => {
+  return new Promise((resolve, reject) => {
+    axios.get(`${baseEndPointUrl}/area/nrtc`)
+      .then(response => resolve(response.data))
+      .catch(error => reject(error.response.data))
+  })
+}

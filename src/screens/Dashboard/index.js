@@ -1,23 +1,59 @@
-import React, {Fragment, useState} from 'react';
+import React, {Fragment, useState, useEffect} from 'react';
 import {Text, Container, Content, Form, Icon, View, Button} from 'native-base';
 import HeaderComponent from "./header";
 import SingleOption from "../../components/SelectOption"
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import DropDown from "../../components/DropDown";
 import {area} from "../../utils/constant"
+import {profileAPI} from "../../API/user"
 
 import styles from './styles';
 
 function Dashboard(props) {
 
-  const [headOffices, setHeadOffices] = useState([])
+  const [headOffices, setHeadOffices] = useState([{
+    id: 1,
+    name: "Islamabad"
+  }])
   const [zones, setZones] = useState([])
   const [regions, setRegions] = useState([])
   const [cities, setCities] = useState([])
   const [stores, setStores] = useState([])
   const [company, setCompany] = useState("ptcl")
 
+  useEffect(() => {
+    (async function () {
+      let userInfo = await AsyncStorage.getItem("userInfo")
+      if (userInfo) {
+        userInfo = JSON.parse(userInfo)
+        profileAPI(userInfo.userId)
+          .then(response => {
+            const {isSuccess = false, payload = {}, message = ''} = response
+            if (isSuccess) {
+              const {
+                currentUser: {
+                  zonesDetail = [],
+                  regionsDetail = [],
+                  citiesDetail = [],
+                  storesDetail = []
+                }
+              } = payload;
 
-  const {navigation} = props;
+              setZones(zonesDetail)
+              setRegions(regionsDetail)
+              setCities(citiesDetail)
+              setStores(storesDetail)
+
+              console.log("userDetail", payload)
+            } else {
+              console.log("userDetail error", message)
+            }
+          })
+      }
+    })()
+  }, [])
+
+  console.log("zones", zones)
 
   return (
     <Fragment style={{backgroundColor: 'white'}}>

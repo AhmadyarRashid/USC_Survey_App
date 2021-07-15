@@ -21,8 +21,8 @@ function DrawerScreensRoutes(props) {
       drawerContentOptions={{
         activeTintColor: Colors.primary,
       }}
-      initialRouteName="Home">
-      <Drawer.Screen name="Home" component={newProps => <DashboardScreen {...props} {...newProps} />}/>
+      initialRouteName="Dashboard">
+      <Drawer.Screen name="Dashboard" component={newProps => <DashboardScreen {...props} {...newProps} />}/>
       <Drawer.Screen name="Settings" component={newProps => <SettingScreen {...props} {...newProps} />}/>
     </Drawer.Navigator>
   )

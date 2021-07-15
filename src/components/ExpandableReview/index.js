@@ -15,7 +15,7 @@ function ExpandableReview({data=[], onCheckBoxHandler}){
           onPress={() => onCheckBoxHandler(id, !checked)}
         />
         <Text style={styles.headerText}>
-          {" "}{item.itemName}
+          {" "}{item.name}
         </Text>
         {expanded
           ? <Icon style={styles.headerIcon} name="arrow-up" />

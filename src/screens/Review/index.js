@@ -1,8 +1,9 @@
-import React, {Fragment, useState} from "react";
+import React, {Fragment, useState, useEffect} from "react";
 import {Container, Content, View, Text} from "native-base";
 import ReviewHeader from "./header";
 import styles from "./styles";
 import ExpandableReview from "../../components/ExpandableReview";
+import {getNRTCItems} from "../../API/user"
 
 const dataStructure = [
   {
@@ -92,13 +93,24 @@ const dataStructure = [
 ]
 
 function ReviewScreen(props) {
-  const [data, setData] = useState(dataStructure)
+  const [data, setData] = useState([])
+
+  useEffect(() => {
+    getNRTCItems()
+      .then(response => {
+        console.log("response", response)
+        const {isSuccess = false, payload = [], message = ''} = response
+        if (isSuccess){
+          setData(payload)
+        }
+      })
+  }, [])
 
   const onCheckBoxHandler = (productId, itemId, status) => {
     const updatedData = data.map(product => product.id === productId
       ? {
         ...product,
-        details: product.details.map(item => item.id === itemId
+        data: product.data.map(item => item.id === itemId
           ? {...item, checked: status}
           : item)
       }
@@ -115,7 +127,7 @@ function ReviewScreen(props) {
             <View style={styles.category}>
               <Text style={styles.categoryTitle}>{product.name}</Text>
               <ExpandableReview
-                data={product.details}
+                data={product.data}
                 onCheckBoxHandler={(id, checked) => onCheckBoxHandler(product.id, id, checked)}
               />
             </View>

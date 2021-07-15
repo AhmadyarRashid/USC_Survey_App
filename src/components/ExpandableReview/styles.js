@@ -13,7 +13,8 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.lightGrey,
   },
   headerText: {
-    fontWeight: "600"
+    fontWeight: "600",
+    width: "70%"
   },
   headerIcon: {
     fontSize: 18
