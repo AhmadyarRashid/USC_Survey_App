@@ -3,7 +3,7 @@ import {Colors} from '../../utils/colors';
 
 const styles = StyleSheet.create({
   root: {
-    backgroundColor: Colors.primary,
+    backgroundColor: Colors.lightGrey,
   },
   image: {
     flex: 1,
@@ -22,23 +22,21 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
   },
-  logoImage: {
-    height: 80,
-    width: 300,
-  },
   inputContainer: {
     marginTop: 18,
   },
   input: {
     backgroundColor: Colors.white,
+    borderRadius: 12
   },
   loginBtn: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.primary,
     color: Colors.black,
-    marginTop: 18
+    marginTop: 18,
+    borderRadius: 12
   },
   loginBtnText: {
-    color: Colors.black
+    color: Colors.white
   }
 });
 

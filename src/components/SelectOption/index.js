@@ -23,6 +23,15 @@ function SelectOption({selectedOption, setOption}){
       >
         <Text>NRTC</Text>
       </Button>
+      <Button
+        onPress={() => setOption("erp")}
+        style={styles.button}
+        block={selectedOption === "erp"}
+        bordered={selectedOption !== "erp"}
+        success
+      >
+        <Text>ERP</Text>
+      </Button>
     </View>
   )
 }

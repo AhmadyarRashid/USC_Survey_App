@@ -18,30 +18,24 @@ function DashboardHeaderComponent({navigation, ...props}) {
   };
 
   return (
-      <Header style={{backgroundColor: 'white'}}>
-        <Left>
-          <Button onPress={() => navigation.toggleDrawer()} transparent>
-            <Icon style={{color: Colors.primary}} name='menu'/>
-          </Button>
-        </Left>
-        <Body>
-          <Title style={{color: 'black'}}>Dashboard</Title>
-        </Body>
-        <Right>
-          {/*<Icon*/}
-          {/*    onPress={() => syncHandler()}*/}
-          {/*    name="sync"*/}
-          {/*    type="MaterialCommunityIcons"*/}
-          {/*    style={styles.icon}*/}
-          {/*/>*/}
-          <Icon
-              onPress={() => logoutHandler()}
-              name="logout"
-              type="MaterialCommunityIcons"
-              style={styles.icon}
-          />
-        </Right>
-      </Header>
+    <Header style={{backgroundColor: Colors.lightGrey}}>
+      <Left>
+        <Button onPress={() => navigation.toggleDrawer()} transparent>
+          <Icon style={{color: Colors.primary}} name='menu'/>
+        </Button>
+      </Left>
+      <Body>
+        <Title style={{color: Colors.black}}>Dashboard</Title>
+      </Body>
+      <Right>
+        <Icon
+          onPress={() => logoutHandler()}
+          name="logout"
+          type="MaterialCommunityIcons"
+          style={styles.icon}
+        />
+      </Right>
+    </Header>
   );
 }
 

@@ -1,18 +1,19 @@
 import React from 'react';
 import {Image} from 'react-native';
-import {Container, View, Text, Content, Item, Input, Button, Spinner} from 'native-base';
+import {Container, View, Text, Content, Item, Input, Button, Spinner, Toast, NativeBase} from 'native-base';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// import HowmuchLogo
-//   from '../../howmuch-pos-core/assets/white-logo-d2f8ee8ad6826748f6bbb347288990a00cf0f02bf834698f506ed3ee01f7c581.png';
-import styles from './styles';
 import LoadingScreen from '../Splash';
+import {loginAPI} from "../../API/user"
+import Logo from "../../assets/usc.jpg"
+import styles from './styles';
+import { showMessage } from "react-native-flash-message";
 
 class LoginComponent extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
+      email: '',
       password: '',
       isLoading: false,
       isSplashScreen: true,
@@ -33,9 +34,9 @@ class LoginComponent extends React.Component {
     }, 3500);
   }
 
-  handlerChangeUsername = username => {
+  handlerChangeEmail = email => {
     this.setState({
-      username,
+      email,
     });
   };
 
@@ -46,70 +47,100 @@ class LoginComponent extends React.Component {
   };
 
   handlerLogin = () => {
-    const {username, password} = this.state;
+    const {email, password} = this.state;
+
+    if (email.length < 4 || email.indexOf("@") === -1) {
+      showMessage({
+        message: "Please enter correct email",
+        type: "danger",
+        duration: 3000,
+      });
+      return;
+    }
+
+    if (password.length === 0){
+      showMessage({
+        message: "Please enter password",
+        type: "danger",
+        duration: 3000,
+      });
+      return;
+    }
+
     this.setState({
       isLoading: true,
     });
 
-    setTimeout(() => {
-      this.setState({
-        isLoading: false,
-      });
-      this.props.navigation.navigate('Dashboard');
-    }, 2000);
-    // userLogin({username, password}).then(async (response) => {
-    //   this.setState({
-    //     isLoading: false,
-    //   });
-    //   const userInfo = response.data;
-    //   await AsyncStorage.setItem(USER_INFO_LDK, JSON.stringify(response.data));
-    //   this.props.navigation.navigate('Dashboard');
-    // }).catch(error => {
-    //   this.setState({
-    //     isLoading: false,
-    //   });
-    //   console.log('error:', error);
-    //   alert(error);
-    // });
-  };
+    // now hit api
+    loginAPI(email, password)
+      .then(response => {
+        console.log("login response", response)
+        const {
+          isSuccess = false,
+          payload = {},
+          message = ""
+        } = response
+        if (isSuccess) {
+          AsyncStorage.setItem("userInfo", JSON.stringify(payload));
+          this.setState({
+            isLoading: false,
+          });
+          this.props.navigation.navigate('Dashboard');
+        } else {
+          //  message
+          this.setState({
+            isLoading: false,
+          });
+          showMessage({
+            message,
+            type: "danger",
+            duration: 3000,
+          });
+        }
+      })
+      .catch(error => {
+        console.log("login error response", error)
+      })
+  }
 
   render() {
-    const {username, password, isLoading, isSplashScreen} = this.state;
+    const {email, password, isLoading, isSplashScreen} = this.state;
     if (isSplashScreen) {
       return <LoadingScreen/>;
     }
     return (
-        <Container style={styles.root}>
-          <Content style={styles.content}>
-            <View style={styles.logoContainer}>
-              {/*<Image source={HowmuchLogo} style={styles.logoImage}/>*/}
-            </View>
-            <Item regular style={styles.inputContainer}>
-              <Input
-                  autoCapitalize="none"
-                  placeholder='Username'
-                  style={styles.input}
-                  value={username}
-                  onChangeText={text => this.handlerChangeUsername(text)}
-              />
-            </Item>
-            <Item regular style={styles.inputContainer}>
-              <Input
-                  autoCapitalize="none"
-                  placeholder='Password'
-                  style={styles.input}
-                  value={password}
-                  onChangeText={text => this.handlerChangePassword(text)}
-              />
-            </Item>
-            <Button
-                full
-                onPress={() => this.handlerLogin()}
-                style={styles.loginBtn}>
-              {isLoading ? <Spinner color='green'/> : <Text style={styles.loginBtnText}>Login</Text>}
-            </Button>
-          </Content>
-        </Container>
+      <Container style={styles.root}>
+        <Content style={styles.content}>
+          <View style={styles.logoContainer}>
+            <Image source={Logo}/>
+          </View>
+          <Item regular style={styles.inputContainer}>
+            <Input
+              autoCapitalize="none"
+              placeholder='Email'
+              style={styles.input}
+              value={email}
+              onChangeText={text => this.handlerChangeEmail(text)}
+            />
+          </Item>
+          <Item regular style={styles.inputContainer}>
+            <Input
+              autoCapitalize="none"
+              placeholder='Password'
+              style={styles.input}
+              value={password}
+              onChangeText={text => this.handlerChangePassword(text)}
+            />
+          </Item>
+          <Button
+            full
+            disabled={isLoading}
+            onPress={() => this.handlerLogin()}
+            style={styles.loginBtn}>
+            {isLoading ? <Spinner color="white" size={20}/> : <Text style={styles.loginBtnText}>Login</Text>}
+          </Button>
+        </Content>
+      </Container>
     );
   }
 }

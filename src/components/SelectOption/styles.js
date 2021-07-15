@@ -1,5 +1,4 @@
 import {StyleSheet} from 'react-native';
-import {Colors} from "../../utils/colors"
 
 const styles = StyleSheet.create({
   row: {
@@ -9,7 +8,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   button: {
-    width: '45%',
+    width: '25%',
     display: 'flex',
     justifyContent: 'center',
   }

@@ -1,9 +1,17 @@
-import React from 'react';
-import AppRoutes from './src/Routes/index';
+import React, {Fragment, useState} from 'react';
+import AppRoutes from './src/routes/index';
+import FlashMessage from "react-native-flash-message";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const App: () => React$Node = () => {
+function App (){
   // enable app requests in chrome debugging
-  return (<AppRoutes/>);
+
+  return (
+    <Fragment>
+      <AppRoutes/>
+      <FlashMessage position="top"/>
+    </Fragment>
+  );
 };
 
 export default App;
