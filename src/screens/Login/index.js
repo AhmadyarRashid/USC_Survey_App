@@ -26,7 +26,7 @@ class LoginComponent extends React.Component {
       if (data) {
         data = JSON.parse(data)
         this.props.navigation.navigate('Dashboard', {
-          id: data.userId
+          userId: data.userId
         });
       }
     }, 3000);
@@ -80,7 +80,9 @@ class LoginComponent extends React.Component {
           this.setState({
             isLoading: false,
           });
-          this.props.navigation.navigate('Dashboard');
+          this.props.navigation.navigate('Dashboard',{
+            userId: payload.userId
+          });
         } else {
           //  message
           this.setState({

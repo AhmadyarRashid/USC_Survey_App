@@ -2,7 +2,7 @@ import React from "react"
 import {Body, Button, Header, Icon, Left, Right, Title, Text} from "native-base";
 import {Colors} from "../../utils/colors";
 
-function ReviewHeader({navigation, ...props}){
+function ReviewHeader({navigation, onSubmitReport, ...props}){
   return(
     <Header style={{backgroundColor: 'white'}}>
       <Left>
@@ -14,7 +14,9 @@ function ReviewHeader({navigation, ...props}){
         <Title style={{color: 'black'}}>Review</Title>
       </Body>
       <Right>
-        <Button transparent>
+        <Button
+          onPress={() => onSubmitReport()}
+          transparent>
           <Text style={{color: Colors.primary}}>Submit</Text>
         </Button>
       </Right>

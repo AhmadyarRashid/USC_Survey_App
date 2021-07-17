@@ -22,8 +22,14 @@ function DrawerScreensRoutes(props) {
         activeTintColor: Colors.primary,
       }}
       initialRouteName="Dashboard">
-      <Drawer.Screen name="Dashboard" component={newProps => <DashboardScreen {...props} {...newProps} />}/>
-      <Drawer.Screen name="Settings" component={newProps => <SettingScreen {...props} {...newProps} />}/>
+      <Drawer.Screen
+        name="Dashboard"
+        getId={({ params }) => params}
+        component={newProps => <DashboardScreen {...props} {...newProps} />}/>
+      <Drawer.Screen
+        name="Settings"
+        getId={({ params }) => params}
+        component={newProps => <SettingScreen {...props} {...newProps} />}/>
     </Drawer.Navigator>
   )
 }
@@ -70,6 +76,7 @@ function App() {
         <Stack.Screen
           name="Dashboard"
           component={DrawerScreensRoutes}
+          getId={({ params }) => params}
           options={{
             title: 'Dashboard',
             headerStyle: {

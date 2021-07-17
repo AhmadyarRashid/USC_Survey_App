@@ -18,17 +18,30 @@ export const profileAPI = userId => {
   })
 }
 
-export const getNRTCItems = () => {
+export const getNRTCItems = (userId, storeId) => {
   return new Promise((resolve, reject) => {
-    axios.get(`${baseEndPointUrl}/area/nrtc`)
+    axios.get(`${baseEndPointUrl}/area/nrtc/${userId}/${storeId}`)
       .then(response => resolve(response.data))
       .catch(error => reject(error.response.data))
   })
 }
 
-export const getPTCLItems = () => {
+export const getPTCLItems = (userId, storeId) => {
   return new Promise((resolve, reject) => {
-    axios.get(`${baseEndPointUrl}/area/ptcl`)
+    axios.get(`${baseEndPointUrl}/area/ptcl/${userId}/${storeId}`)
+      .then(response => resolve(response.data))
+      .catch(error => reject(error.response.data))
+  })
+}
+
+export const submitReportAPI = (userId, storeId, company, submitedData ) => {
+  return new Promise((resolve, reject) => {
+    axios.post(`${baseEndPointUrl}/area/submitReport`, {
+      userId,
+      storeId,
+      company,
+      submitedData
+    })
       .then(response => resolve(response.data))
       .catch(error => reject(error.response.data))
   })

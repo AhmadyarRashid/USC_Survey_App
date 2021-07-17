@@ -1,11 +1,14 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Alert, Modal, Pressable} from "react-native";
 import {Text, View, Textarea, Button} from "native-base";
 import styles from "./styles";
 import {Colors} from "../../utils/colors";
 
-function FeedbackModal({modalVisible, setModalVisible}){
-  return(
+function FeedbackModal({modalVisible, setModalVisible, addRemarksHandler = () => {}}) {
+
+  const [remarks, setRemarks] = useState("");
+
+  return (
     <Modal
       animationType="slide"
       transparent={true}
@@ -19,7 +22,13 @@ function FeedbackModal({modalVisible, setModalVisible}){
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           <Text style={styles.modalText}>Feedback</Text>
-          <Textarea style={{width: '100%'}} rowSpan={5} bordered placeholder="Something write..." />
+          <Textarea
+            style={{width: '100%'}}
+            onChangeText={value => {
+              setRemarks(value)
+            }}
+            rowSpan={5} bordered
+            placeholder="Something write..."/>
 
           <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-around', marginTop: 12}}>
             <Button
@@ -32,7 +41,10 @@ function FeedbackModal({modalVisible, setModalVisible}){
             <Button
               small
               style={{backgroundColor: Colors.primary}}
-              onPress={() => setModalVisible(!modalVisible)}
+              onPress={() => {
+                addRemarksHandler(remarks);
+                setModalVisible(!modalVisible)
+              }}
             >
               <Text>Save</Text>
             </Button>

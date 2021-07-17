@@ -20,12 +20,15 @@ function Dashboard(props) {
   const [cities, setCities] = useState([])
   const [stores, setStores] = useState([])
   const [company, setCompany] = useState("ptcl")
+  const [userId, setUserId] = useState("-1")
+  const [selectedStoreId, setStoreId] = useState("-1")
 
   useEffect(() => {
     (async function () {
       let userInfo = await AsyncStorage.getItem("userInfo")
       if (userInfo) {
         userInfo = JSON.parse(userInfo)
+        setUserId(userInfo.userId)
         profileAPI(userInfo.userId)
           .then(response => {
             const {isSuccess = false, payload = {}, message = ''} = response
@@ -43,6 +46,9 @@ function Dashboard(props) {
               setRegions(regionsDetail)
               setCities(citiesDetail)
               setStores(storesDetail)
+              if (storesDetail.length > 0){
+                setStoreId(storesDetail[0].id)
+              }
 
               console.log("userDetail", payload)
             } else {
@@ -52,8 +58,6 @@ function Dashboard(props) {
       }
     })()
   }, [])
-
-  console.log("zones", zones)
 
   return (
     <Fragment style={{backgroundColor: 'white'}}>
@@ -80,6 +84,7 @@ function Dashboard(props) {
             <DropDown
               name={area.store}
               list={stores}
+              onChangeOption={storeId => setStoreId(storeId)}
             />
 
             <SingleOption
@@ -90,7 +95,9 @@ function Dashboard(props) {
             <View style={{marginTop: 20}}>
               <Button
                 onPress={() => props.navigation.navigate("Review", {
-                  checklist: company,
+                  company,
+                  userId,
+                  storeId: selectedStoreId
                 })}
                 block
                 success
@@ -99,7 +106,6 @@ function Dashboard(props) {
                 <Icon name='arrow-forward'/>
               </Button>
             </View>
-
           </Form>
         </Content>
       </Container>

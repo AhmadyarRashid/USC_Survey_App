@@ -3,7 +3,7 @@ import {Item, View} from "native-base";
 import {Text, Picker} from 'react-native'
 import {Colors} from "../../utils/colors";
 
-function DropDown({name, list}) {
+function DropDown({name, list, onChangeOption = () => {}}) {
   const [selectedOption, setSelectedOption] = useState('rn')
   return (
       <View style={{width: '100%', marginTop: 12}}>
@@ -18,6 +18,7 @@ function DropDown({name, list}) {
                   onValueChange={(itemValue, itemPosition) => {
                     console.log("selected item:", itemValue, itemPosition)
                     setSelectedOption(itemValue)
+                    onChangeOption(itemValue)
                   }}
           >
             {list.map((item) => <Picker.Item label={item.name} value={item.id}/>)}

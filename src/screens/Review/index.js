@@ -3,7 +3,7 @@ import {Container, Content, View, Text} from "native-base";
 import ReviewHeader from "./header";
 import styles from "./styles";
 import ExpandableReview from "../../components/ExpandableReview";
-import {getNRTCItems, getPTCLItems} from "../../API/user"
+import {getNRTCItems, getPTCLItems, submitReportAPI} from "../../API/user"
 import FeedbackModal from "./Modal";
 
 function ReviewScreen(props) {
@@ -13,10 +13,11 @@ function ReviewScreen(props) {
   const [selectedUnCheckedItem, setSelectedUnCheckedItem] = useState({})
 
   useEffect(() => {
-    const {route: {params: {checklist = "ptcl"}}} = props;
+    const {route: {params: {company = "ptcl", userId, storeId}}} = props;
+    console.log("review params:", props.route.params)
     setLoading(true)
-    if (checklist === "nrtc") {
-      getNRTCItems()
+    if (company === "nrtc") {
+      getNRTCItems(userId, storeId)
         .then(response => {
           setLoading(false)
           console.log("response", response)
@@ -26,8 +27,8 @@ function ReviewScreen(props) {
           }
         })
     }
-    if (checklist === "ptcl") {
-      getPTCLItems()
+    if (company === "ptcl") {
+      getPTCLItems(userId, storeId)
         .then(response => {
           setLoading(false)
           console.log("response", response)
@@ -37,7 +38,7 @@ function ReviewScreen(props) {
           }
         })
     }
-    if (checklist === "erp") {
+    if (company === "erp") {
       setLoading(false)
     }
   }, [])
@@ -52,7 +53,7 @@ function ReviewScreen(props) {
       ? {
         ...product,
         data: product.data.map(item => item.id === itemId
-          ? {...item, checked: status}
+          ? {...item, checked: status.toString()}
           : item)
       }
       : product)
@@ -62,9 +63,38 @@ function ReviewScreen(props) {
     setData(updatedData)
   }
 
+  const addRemarksHandler = (remarks) => {
+    const {productId, itemId} = selectedUnCheckedItem;
+    const updatedData = data.map(product => product.id === productId
+      ? {
+        ...product,
+        data: product.data.map(item => item.id === itemId
+          ? {...item, remarks}
+          : item)
+      }
+      : product)
+    setData(updatedData)
+  }
+
+  const onSubmitReport = () => {
+    console.log("updated data", data)
+    const {route: {params: {company = "ptcl", userId, storeId}}, navigation} = props;
+    submitReportAPI(userId, storeId, company, data)
+      .then(response => {
+        const {isSuccess, payload, message} = response;
+        if (isSuccess){
+          alert("Report Submitted Successfully")
+          navigation.navigate("Dashboard")
+        }
+      })
+  }
+
   return (
     <Fragment>
-      <ReviewHeader {...props} />
+      <ReviewHeader
+        {...props}
+        onSubmitReport={() => onSubmitReport()}
+      />
       <Container style={styles.root}>
         <Content>
           {isLoading && <Text style={{textAlign: 'center'}}>Loading...</Text>}
@@ -83,6 +113,7 @@ function ReviewScreen(props) {
       <FeedbackModal
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
+        addRemarksHandler={addRemarksHandler}
       />
     </Fragment>
   )
