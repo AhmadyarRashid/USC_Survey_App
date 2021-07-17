@@ -25,3 +25,11 @@ export const getNRTCItems = () => {
       .catch(error => reject(error.response.data))
   })
 }
+
+export const getPTCLItems = () => {
+  return new Promise((resolve, reject) => {
+    axios.get(`${baseEndPointUrl}/area/ptcl`)
+      .then(response => resolve(response.data))
+      .catch(error => reject(error.response.data))
+  })
+}

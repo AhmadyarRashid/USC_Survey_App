@@ -55,6 +55,7 @@ function App() {
         <Stack.Screen
           name="Review"
           component={ReviewScreen}
+          getId={({ params }) => params}
           options={{
             title: 'Review',
             headerStyle: {

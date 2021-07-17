@@ -89,7 +89,9 @@ function Dashboard(props) {
 
             <View style={{marginTop: 20}}>
               <Button
-                onPress={() => props.navigation.navigate("Review")}
+                onPress={() => props.navigation.navigate("Review", {
+                  checklist: company,
+                })}
                 block
                 success
               >
