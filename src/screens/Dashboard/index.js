@@ -9,6 +9,11 @@ import {profileAPI} from "../../API/user"
 
 import styles from './styles';
 
+let allZones = []
+let allRegions = []
+let allCities = []
+let allStores = []
+
 function Dashboard(props) {
 
   const [headOffices, setHeadOffices] = useState([{
@@ -22,6 +27,11 @@ function Dashboard(props) {
   const [company, setCompany] = useState("ptcl")
   const [userId, setUserId] = useState("-1")
   const [selectedStoreId, setStoreId] = useState("-1")
+
+  // selected area ids
+  const [selectedZoneId, setSelectedZoneId] = useState("-1")
+  const [selectedRegionId, setSelectedRegionId] = useState("-1")
+  const [selectedCityId, setSelectedCityId] = useState("-1")
 
   useEffect(() => {
     (async function () {
@@ -42,10 +52,18 @@ function Dashboard(props) {
                 }
               } = payload;
 
-              setZones(zonesDetail)
-              setRegions(regionsDetail)
-              setCities(citiesDetail)
-              setStores(storesDetail)
+              // set all details
+              allZones = zonesDetail
+              allRegions = regionsDetail
+              allCities = citiesDetail
+              allStores = storesDetail
+
+              // update states that display in dropdown
+              setZones(zonesDetail)   // dont touch it
+              setRegions(regionsDetail.filter(region => region.pid == zonesDetail[0].id))
+              setCities(citiesDetail.filter(city => city.pid == regionsDetail[0].id))
+              setStores(storesDetail.filter(store => store.pid == citiesDetail[0].id))
+
               if (storesDetail.length > 0){
                 setStoreId(storesDetail[0].id)
               }
@@ -58,6 +76,24 @@ function Dashboard(props) {
       }
     })()
   }, [])
+
+  const onChangeZoneId = async zoneId => {
+    await setSelectedZoneId(zoneId)
+    await setRegions(allRegions.filter(region => region.pid == zoneId))
+    await setCities(allCities.filter(city => city.pid == regionsDetail[0].id))
+    await setStores(allStores.filter(store => store.pid == citiesDetail[0].id))
+  }
+
+  const onChangeRegionId = async regionId => {
+    await setSelectedRegionId(regionId)
+    await setCities(allCities.filter(city => city.pid == regionId))
+    await setStores(allStores.filter(store => store.pid == citiesDetail[0].id))
+  }
+
+  const onChangeCityId = async cityId => {
+    await setSelectedCityId(cityId)
+    await setStores(allStores.filter(store => store.pid == cityId))
+  }
 
   return (
     <Fragment style={{backgroundColor: 'white'}}>
@@ -72,14 +108,17 @@ function Dashboard(props) {
             <DropDown
               name={area.zone}
               list={zones}
+              onChangeOption={zoneId => onChangeZoneId(zoneId)}
             />
             <DropDown
               name={area.region}
               list={regions}
+              onChangeOption={regionId => onChangeRegionId(regionId)}
             />
             <DropDown
               name={area.city}
               list={cities}
+              onChangeOption={cityId => onChangeCityId(cityId)}
             />
             <DropDown
               name={area.store}
