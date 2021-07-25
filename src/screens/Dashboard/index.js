@@ -85,17 +85,20 @@ function Dashboard(props) {
     await setRegions(allRegions.filter(region => region.pid == zoneId))
     await setCities(allCities.filter(city => city.pid == regions[0].id))
     await setStores(allStores.filter(store => store.pid == cities[0].id))
+    await setStoreId(stores[0].id)
   }
 
   const onChangeRegionId = async regionId => {
     await setSelectedRegionId(regionId)
     await setCities(allCities.filter(city => city.pid == regionId))
     await setStores(allStores.filter(store => store.pid == cities[0].id))
+    await setStoreId(stores[0].id)
   }
 
   const onChangeCityId = async cityId => {
     await setSelectedCityId(cityId)
     await setStores(allStores.filter(store => store.pid == cityId))
+    await setStoreId(stores[0].id)
   }
 
   return (
