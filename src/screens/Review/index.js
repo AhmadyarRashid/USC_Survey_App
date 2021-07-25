@@ -53,7 +53,7 @@ function ReviewScreen(props) {
       ? {
         ...product,
         data: product.data.map(item => item.id === itemId
-          ? {...item, checked: status.toString()}
+          ? {...item, checked: status}
           : item)
       }
       : product)
@@ -107,7 +107,6 @@ function ReviewScreen(props) {
               />
             </View>
           ))}
-
         </Content>
       </Container>
       <FeedbackModal

@@ -10,7 +10,7 @@ function ExpandableReview({data=[], onCheckBoxHandler}){
     return (
       <View style={styles.header}>
         <CheckBox
-          checked={checked}
+          checked={Boolean(checked)}
           color={Colors.primary}
           onPress={() => onCheckBoxHandler(id, !checked)}
         />
