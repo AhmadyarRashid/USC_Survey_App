@@ -5,16 +5,18 @@ import styles from "./styles";
 import ExpandableReview from "../../components/ExpandableReview";
 import {getNRTCItems, getPTCLItems, submitReportAPI} from "../../API/user"
 import FeedbackModal from "./Modal";
+import SelectionScreen from "./SelectionScreen";
 
 function ReviewScreen(props) {
   const [data, setData] = useState([])
   const [isLoading, setLoading] = useState(false)
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedUnCheckedItem, setSelectedUnCheckedItem] = useState({})
+  const [isSelectionScreen, setSelectionScreen] = useState(true)
+  const [selectedProducts, setSelectedProducts] = useState([])
 
   useEffect(() => {
     const {route: {params: {company = "ptcl", userId, storeId}}} = props;
-    console.log("review params:", props.route.params)
     setLoading(true)
     if (company === "nrtc") {
       getNRTCItems(userId, storeId)
@@ -77,37 +79,55 @@ function ReviewScreen(props) {
   }
 
   const onSubmitReport = () => {
-    console.log("updated data", data)
+    let filteredData = data.filter(product => selectedProducts.indexOf(product.id) > -1)
+    console.log("updated data", filteredData)
     const {route: {params: {company = "ptcl", userId, storeId}}, navigation} = props;
-    submitReportAPI(userId, storeId, company, data)
+    submitReportAPI(userId, storeId, company, filteredData)
       .then(response => {
         const {isSuccess, payload, message} = response;
-        if (isSuccess){
+        if (isSuccess) {
           alert("Report Submitted Successfully")
           navigation.navigate("Dashboard")
         }
       })
   }
 
+  let bodyContent;
+
+  if (isSelectionScreen) {
+    bodyContent = <SelectionScreen
+      data={data}
+      onStartHandler={list => {
+        setSelectionScreen(false)
+        setSelectedProducts(list)
+      }}
+    />
+  } else {
+    let filteredData = data.filter(product => selectedProducts.indexOf(product.id) > -1)
+    bodyContent =
+      <Content>
+        {filteredData.map(product => (
+          <View style={styles.category}>
+            <Text style={styles.categoryTitle}>{product.name}</Text>
+            <ExpandableReview
+              data={product.data}
+              onCheckBoxHandler={(id, checked) => onCheckBoxHandler(product.id, id, checked)}
+            />
+          </View>
+        ))}
+      </Content>
+  }
+
   return (
     <Fragment>
       <ReviewHeader
         {...props}
+        isSelectionScreen={isSelectionScreen}
         onSubmitReport={() => onSubmitReport()}
       />
       <Container style={styles.root}>
-        <Content>
-          {isLoading && <Text style={{textAlign: 'center'}}>Loading...</Text>}
-          {data.map(product => (
-            <View style={styles.category}>
-              <Text style={styles.categoryTitle}>{product.name}</Text>
-              <ExpandableReview
-                data={product.data}
-                onCheckBoxHandler={(id, checked) => onCheckBoxHandler(product.id, id, checked)}
-              />
-            </View>
-          ))}
-        </Content>
+        {isLoading && <Text style={{textAlign: 'center'}}>Loading...</Text>}
+        {bodyContent}
       </Container>
       <FeedbackModal
         modalVisible={modalVisible}
