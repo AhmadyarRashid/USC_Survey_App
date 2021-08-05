@@ -70,14 +70,14 @@ function EditStoreInfo({navigation, ...props}) {
 
   return (
       <Container>
-        <Header>
+        <Header style={{backgroundColor: Colors.lightGrey}}>
           <Left>
             <Button transparent onPress={() => navigation.goBack()}>
               <Icon style={{color: Colors.primary}} name='arrow-back'/>
             </Button>
           </Left>
           <Body>
-            <Title>Edit Store</Title>
+            <Title style={{color: Colors.black}}>Edit Store</Title>
           </Body>
           <Right>
             <Text

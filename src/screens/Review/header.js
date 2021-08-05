@@ -4,14 +4,14 @@ import {Colors} from "../../utils/colors";
 
 function ReviewHeader({navigation, onSubmitReport, isSelectionScreen, storeId, ...props}) {
   return (
-      <Header style={{backgroundColor: 'white'}}>
+      <Header style={{backgroundColor: Colors.lightGrey}}>
         <Left>
           <Button onPress={() => navigation.goBack()} transparent>
             <Icon style={{color: Colors.primary}} name='arrow-back'/>
           </Button>
         </Left>
         <Body>
-          <Title style={{color: 'black'}}>Review</Title>
+          <Title style={{color: Colors.black}}>Review</Title>
         </Body>
         <Right>
           {!isSelectionScreen
