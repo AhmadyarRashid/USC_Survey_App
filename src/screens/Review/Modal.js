@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
-import {Alert, Modal, Pressable} from "react-native";
+import {Alert, Modal} from "react-native";
 import {Text, View, Textarea, Button} from "native-base";
-import styles from "./styles";
 import {Colors} from "../../utils/colors";
+import styles from "./styles";
 
 function FeedbackModal({modalVisible, setModalVisible, addRemarksHandler = () => {}}) {
 

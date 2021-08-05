@@ -7,7 +7,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import LoginScreen from '../screens/Login';
 import DashboardScreen from '../screens/Dashboard';
-import ReviewScreen from "../screens/Review"
+import ReviewScreen from "../screens/Review";
+import EditStoreScreen from "../screens/EditStoreInfo";
 import SettingScreen from '../screens/Setting';
 
 import {Colors} from "../utils/colors"
@@ -87,6 +88,21 @@ function App() {
               fontWeight: 'bold',
             },
           }}
+        />
+        <Stack.Screen
+            name="Store"
+            component={EditStoreScreen}
+            getId={({ params }) => params}
+            options={{
+              title: 'Store',
+              headerStyle: {
+                backgroundColor: Colors.primary,
+              },
+              headerTintColor: Colors.white,
+              headerTitleStyle: {
+                fontWeight: 'bold',
+              },
+            }}
         />
       </Stack.Navigator>
     </NavigationContainer>

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Image} from 'react-native';
 import {Container, View, Text, Content, Item, Input, Button, Spinner} from 'native-base';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import LoadingScreen from '../Splash';
 import {loginAPI} from "../../API/user"
 import Logo from "../../assets/usc.jpg"
@@ -122,6 +122,7 @@ class LoginComponent extends React.Component {
               placeholder='Password'
               style={styles.input}
               value={password}
+              secureTextEntry={true}
               onChangeText={text => this.handlerChangePassword(text)}
             />
           </Item>
