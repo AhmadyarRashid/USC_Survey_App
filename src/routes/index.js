@@ -1,9 +1,8 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import LoginScreen from '../screens/Login';
 import DashboardScreen from '../screens/Dashboard';

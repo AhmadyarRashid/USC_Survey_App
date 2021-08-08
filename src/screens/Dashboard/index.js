@@ -30,6 +30,8 @@ function Dashboard(props) {
   const [selectedStoreId, setStoreId] = useState("-1")
   const [isLoading, setLoading] = useState(false)
 
+  const [userName, setUserName] = useState('')
+
   // selected area ids
   const [selectedZoneId, setSelectedZoneId] = useState("-1")
   const [selectedRegionId, setSelectedRegionId] = useState("-1")
@@ -52,7 +54,8 @@ function Dashboard(props) {
                   zonesDetail = [],
                   regionsDetail = [],
                   citiesDetail = [],
-                  storesDetail = []
+                  storesDetail = [],
+                  name
                 }
               } = payload;
 
@@ -67,6 +70,7 @@ function Dashboard(props) {
               setRegions(regionsDetail.filter(region => region.pid == zonesDetail[0].id))
               setCities(citiesDetail.filter(city => city.pid == regionsDetail[0].id))
               setStores(storesDetail.filter(store => store.pid == citiesDetail[0].id))
+              setUserName(name)
 
               if (storesDetail.length > 0){
                 setStoreId(storesDetail[0].id)
@@ -79,7 +83,7 @@ function Dashboard(props) {
           })
       }
     })()
-  }, [])
+  }, [userId])
 
   const onChangeZoneId = async zoneId => {
     await setSelectedZoneId(zoneId)
@@ -109,6 +113,7 @@ function Dashboard(props) {
         ? <Text style={{textAlign: 'center'}}>Loading...</Text>
         : <Container style={styles.root}>
           <Content>
+            {userName ? <Text style={{textAlign: 'right', fontWeight: 'bold'}}>UserName: {userName}</Text> : <></>}
             <Form>
               <DropDown
                 name={area.headOffice}
