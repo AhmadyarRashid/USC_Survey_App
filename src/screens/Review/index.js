@@ -31,8 +31,7 @@ function ReviewScreen(props) {
         }).catch(err => {
         setLoading(false)
       })
-    }
-    if (company === "ptcl") {
+    } else if (company === "ptcl") {
       getPTCLItems(userId, storeId)
         .then(response => {
           setLoading(false)
@@ -44,11 +43,19 @@ function ReviewScreen(props) {
         }).catch(err => {
         setLoading(false)
       })
+    }else {
+      getERPItems(userId, storeId)
+        .then(response => {
+          setLoading(false)
+          const {isSuccess = false, payload = [], message = ''} = response
+          if (isSuccess) {
+            setData(payload)
+          }
+        }).catch(err => {
+        setLoading(false)
+      })
     }
-    if (company === "erp") {
-      setLoading(false)
-    }
-  }, [])
+  }, [company])
 
   const onCheckBoxHandler = (productId, itemId, status) => {
     setSelectedUnCheckedItem({
