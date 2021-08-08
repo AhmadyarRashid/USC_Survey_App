@@ -34,6 +34,14 @@ export const getPTCLItems = (userId, storeId) => {
   })
 }
 
+export const getERPItems = (userId, storeId) => {
+  return new Promise((resolve, reject) => {
+    axios.get(`${baseEndPointUrl}/area/erp/${userId}/${storeId}`)
+      .then(response => resolve(response.data))
+      .catch(error => reject(error.response.data))
+  })
+}
+
 export const submitReportAPI = (userId, storeId, company, submitedData ) => {
   return new Promise((resolve, reject) => {
     axios.post(`${baseEndPointUrl}/area/submitReport`, {

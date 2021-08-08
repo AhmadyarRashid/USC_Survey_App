@@ -3,7 +3,7 @@ import {Container, Content, View, Text} from "native-base";
 import ReviewHeader from "./header";
 import styles from "./styles";
 import ExpandableReview from "../../components/ExpandableReview";
-import {getNRTCItems, getPTCLItems, submitReportAPI} from "../../API/user"
+import {getNRTCItems, getPTCLItems, submitReportAPI, getERPItems} from "../../API/user"
 import FeedbackModal from "./Modal";
 import SelectionScreen from "./SelectionScreen";
 
@@ -27,7 +27,9 @@ function ReviewScreen(props) {
           if (isSuccess) {
             setData(payload)
           }
-        })
+        }).catch(err => {
+        setLoading(false)
+      })
     }
     if (company === "ptcl") {
       getPTCLItems(userId, storeId)
@@ -38,7 +40,9 @@ function ReviewScreen(props) {
           if (isSuccess) {
             setData(payload)
           }
-        })
+        }).catch(err => {
+        setLoading(false)
+      })
     }
     if (company === "erp") {
       setLoading(false)
