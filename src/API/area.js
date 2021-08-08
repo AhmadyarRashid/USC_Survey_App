@@ -40,3 +40,19 @@ export const getStores = cityId => {
       .catch(error => reject(error))
   })
 }
+
+export const getStoreDetail = storeId => {
+  return new Promise((resolve, reject) => {
+    axios.get(`${baseEndPointUrl}/area/getStoreDetails/${storeId}`)
+        .then(response => resolve(response.data))
+        .catch(error => reject(error))
+  })
+}
+
+export const updateStoreDetail = (storeId, payload) => {
+  return new Promise((resolve, reject) => {
+    axios.put(`${baseEndPointUrl}/area/updateStoreDetails/${storeId}`, payload)
+        .then(response => resolve(response.data))
+        .catch(error => reject(error))
+  })
+}

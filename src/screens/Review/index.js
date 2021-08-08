@@ -15,8 +15,9 @@ function ReviewScreen(props) {
   const [isSelectionScreen, setSelectionScreen] = useState(true)
   const [selectedProducts, setSelectedProducts] = useState([])
 
+  const {route: {params: {company = "ptcl", userId, storeId}}} = props;
+
   useEffect(() => {
-    const {route: {params: {company = "ptcl", userId, storeId}}} = props;
     setLoading(true)
     if (company === "nrtc") {
       getNRTCItems(userId, storeId)
@@ -126,6 +127,7 @@ function ReviewScreen(props) {
     <Fragment>
       <ReviewHeader
         {...props}
+        storeId={storeId}
         isSelectionScreen={isSelectionScreen}
         onSubmitReport={() => onSubmitReport()}
       />

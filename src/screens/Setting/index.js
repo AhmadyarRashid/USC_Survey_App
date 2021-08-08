@@ -1,4 +1,5 @@
 import React from 'react';
+import {AsyncStorage} from "react-native";
 import {
   Button,
   Text,
@@ -13,7 +14,6 @@ import {
   Body,
   Title,
 } from 'native-base';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Colors} from '../../utils/colors';
 
 function SettingScreen({navigation, ...props}) {

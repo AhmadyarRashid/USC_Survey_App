@@ -8,6 +8,7 @@ import {area} from "../../utils/constant"
 import {profileAPI} from "../../API/user"
 
 import styles from './styles';
+import {Colors} from "../../utils/colors";
 
 let allZones = []
 let allRegions = []
@@ -147,7 +148,7 @@ function Dashboard(props) {
                     storeId: selectedStoreId
                   })}
                   block
-                  success
+                  style={{backgroundColor: Colors.primary}}
                 >
                   <Text>Start</Text>
                   <Icon name='arrow-forward'/>
