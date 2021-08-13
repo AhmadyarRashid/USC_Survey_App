@@ -8,9 +8,6 @@ import styles from './styles';
 function DashboardHeaderComponent({navigation, ...props}) {
 
   const logoutHandler = async () => {
-    RCTNetworking.clearCookies(() => {
-      console.log('cookie cleared');
-    });
     await AsyncStorage.removeItem('userInfo');
     AsyncStorage.clear().then(response => {
       navigation.navigate('login');

@@ -1,4 +1,5 @@
 import React, {Fragment, useState, useEffect} from "react";
+import {Alert} from "react-native"
 import {Container, Content, View, Text} from "native-base";
 import ReviewHeader from "./header";
 import styles from "./styles";
@@ -43,7 +44,7 @@ function ReviewScreen(props) {
         }).catch(err => {
         setLoading(false)
       })
-    }else {
+    } else {
       getERPItems(userId, storeId)
         .then(response => {
           setLoading(false)
@@ -94,14 +95,30 @@ function ReviewScreen(props) {
     let filteredData = data.filter(product => selectedProducts.indexOf(product.id) > -1)
     console.log("updated data", filteredData)
     const {route: {params: {company = "ptcl", userId, storeId}}, navigation} = props;
-    submitReportAPI(userId, storeId, company, filteredData)
-      .then(response => {
-        const {isSuccess, payload, message} = response;
-        if (isSuccess) {
-          alert("Report Submitted Successfully")
-          navigation.navigate("Dashboard")
+    Alert.alert(
+      "Submit Report",
+      "Are you sure to Submit Reports ?",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        {
+          text: "OK",
+          onPress: () => {
+            submitReportAPI(userId, storeId, company, filteredData)
+              .then(response => {
+                const {isSuccess, payload, message} = response;
+                if (isSuccess) {
+                  alert("Report Submitted Successfully")
+                  navigation.navigate("Dashboard")
+                }
+              })
+          }
         }
-      })
+      ]
+    );
   }
 
   let bodyContent;
