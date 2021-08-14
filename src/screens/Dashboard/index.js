@@ -140,10 +140,12 @@ function Dashboard(props) {
                 onChangeOption={storeId => setStoreId(storeId)}
               />
 
+              {Number(selectedStoreId) > -1 &&
               <SingleOption
                 selectedOption={company}
                 setOption={setCompany}
-              />
+                store={stores.find(store => store.id === selectedStoreId)}
+              />}
 
               <View style={{marginTop: 20}}>
                 <Button

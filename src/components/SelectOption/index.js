@@ -2,10 +2,13 @@ import React from "react";
 import {Button, View, Text} from "native-base";
 import styles from "./styles"
 
-function SelectOption({selectedOption, setOption}){
-  return(
+function SelectOption({
+                        selectedOption, setOption, store:
+    {ptclLocked = "false", nrtcLocked = "false", erpLocked = "false"}}
+) {
+  return (
     <View style={styles.row}>
-      <Button
+      {ptclLocked === "false" && <Button
         onPress={() => setOption("ptcl")}
         style={styles.button}
         block={selectedOption === "ptcl"}
@@ -13,8 +16,9 @@ function SelectOption({selectedOption, setOption}){
         success
       >
         <Text>PTCL</Text>
-      </Button>
-      <Button
+      </Button>}
+
+      {nrtcLocked === "false" && <Button
         onPress={() => setOption("nrtc")}
         style={styles.button}
         block={selectedOption === "nrtc"}
@@ -22,8 +26,9 @@ function SelectOption({selectedOption, setOption}){
         success
       >
         <Text>NRTC</Text>
-      </Button>
-      <Button
+      </Button>}
+
+      {erpLocked === "false" && <Button
         onPress={() => setOption("erp")}
         style={styles.button}
         block={selectedOption === "erp"}
@@ -31,7 +36,7 @@ function SelectOption({selectedOption, setOption}){
         success
       >
         <Text>ERP</Text>
-      </Button>
+      </Button>}
     </View>
   )
 }
