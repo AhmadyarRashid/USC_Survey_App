@@ -5,7 +5,7 @@ import RCTNetworking from 'react-native/Libraries/Network/RCTNetworking';
 import {Colors} from '../../utils/colors';
 import styles from './styles';
 
-function DashboardHeaderComponent({navigation, ...props}) {
+function DashboardHeaderComponent({navigation, loadData = () => {}, ...props}) {
 
   const logoutHandler = async () => {
     await AsyncStorage.removeItem('userInfo');
@@ -25,6 +25,12 @@ function DashboardHeaderComponent({navigation, ...props}) {
         <Title style={{color: Colors.black}}>Dashboard</Title>
       </Body>
       <Right>
+        <Icon
+          onPress={() => loadData()}
+          name="refresh"
+          type="MaterialCommunityIcons"
+          style={styles.icon}
+        />
         <Icon
           onPress={() => logoutHandler()}
           name="logout"

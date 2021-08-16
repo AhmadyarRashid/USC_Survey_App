@@ -3,9 +3,10 @@ import {Button, View, Text} from "native-base";
 import styles from "./styles"
 
 function SelectOption({
-                        selectedOption, setOption, store:
-    {ptclLocked = "false", nrtcLocked = "false", erpLocked = "false"}}
-) {
+                        selectedOption = "ptcl",
+                        setOption,
+                        store=  {}}) {
+  const {ptclLocked = "false", nrtcLocked = "false", erpLocked = "false"} = store
   return (
     <View style={styles.row}>
       {ptclLocked === "false" && <Button

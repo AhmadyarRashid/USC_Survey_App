@@ -38,51 +38,7 @@ function Dashboard(props) {
   const [selectedCityId, setSelectedCityId] = useState("-1")
 
   useEffect(() => {
-    (async function () {
-      let userInfo = await AsyncStorage.getItem("userInfo")
-      if (userInfo) {
-        userInfo = JSON.parse(userInfo)
-        setUserId(userInfo.userId)
-        setLoading(true)
-        profileAPI(userInfo.userId)
-          .then(response => {
-            setLoading(false)
-            const {isSuccess = false, payload = {}, message = ''} = response
-            if (isSuccess) {
-              const {
-                currentUser: {
-                  zonesDetail = [],
-                  regionsDetail = [],
-                  citiesDetail = [],
-                  storesDetail = [],
-                  name
-                }
-              } = payload;
-
-              // set all details
-              allZones = zonesDetail
-              allRegions = regionsDetail
-              allCities = citiesDetail
-              allStores = storesDetail
-
-              // update states that display in dropdown
-              setZones(zonesDetail)   // dont touch it
-              setRegions(regionsDetail.filter(region => region.pid == zonesDetail[0].id))
-              setCities(citiesDetail.filter(city => city.pid == regionsDetail[0].id))
-              setStores(storesDetail.filter(store => store.pid == citiesDetail[0].id))
-              setUserName(name)
-
-              if (storesDetail.length > 0){
-                setStoreId(storesDetail[0].id)
-              }
-
-              console.log("userDetail", payload)
-            } else {
-              console.log("userDetail error", message)
-            }
-          })
-      }
-    })()
+    loadData()
   }, [userId])
 
   const onChangeZoneId = async zoneId => {
@@ -106,9 +62,57 @@ function Dashboard(props) {
     await setStoreId(stores[0].id)
   }
 
+  const loadData = async () => {
+    let userInfo = await AsyncStorage.getItem("userInfo")
+    if (userInfo) {
+      userInfo = JSON.parse(userInfo)
+      setUserId(userInfo.userId)
+      setLoading(true)
+      profileAPI(userInfo.userId)
+        .then(response => {
+          setLoading(false)
+          const {isSuccess = false, payload = {}, message = ''} = response
+          if (isSuccess) {
+            const {
+              currentUser: {
+                zonesDetail = [],
+                regionsDetail = [],
+                citiesDetail = [],
+                storesDetail = [],
+                name
+              }
+            } = payload;
+
+            // set all details
+            allZones = zonesDetail
+            allRegions = regionsDetail
+            allCities = citiesDetail
+            allStores = storesDetail
+
+            // update states that display in dropdown
+            setZones(zonesDetail)   // dont touch it
+            setRegions(regionsDetail.filter(region => region.pid == zonesDetail[0].id))
+            setCities(citiesDetail.filter(city => city.pid == regionsDetail[0].id))
+            setStores(storesDetail.filter(store => store.pid == citiesDetail[0].id))
+            setUserName(name)
+            setCompany("")
+
+            if (storesDetail.length > 0){
+              setStoreId(storesDetail[0].id)
+              selectedStoreId(storesDetail[0].id)
+            }
+
+            console.log("userDetail", payload)
+          } else {
+            console.log("userDetail error", message)
+          }
+        })
+    }
+  }
+
   return (
     <Fragment style={{backgroundColor: 'white'}}>
-      <HeaderComponent {...props}/>
+      <HeaderComponent {...props} loadData={loadData}/>
       {isLoading
         ? <Text style={{textAlign: 'center'}}>Loading...</Text>
         : <Container style={styles.root}>
@@ -140,8 +144,8 @@ function Dashboard(props) {
                 onChangeOption={storeId => setStoreId(storeId)}
               />
 
-              {Number(selectedStoreId) > -1 &&
-              <SingleOption
+              {Number(selectedStoreId) > -1
+              && <SingleOption
                 selectedOption={company}
                 setOption={setCompany}
                 store={stores.find(store => store.id === selectedStoreId)}
