@@ -29,7 +29,7 @@ function DashboardHeaderComponent({navigation, loadData = () => {}, ...props}) {
           onPress={() => loadData()}
           name="refresh"
           type="MaterialCommunityIcons"
-          style={styles.icon}
+          style={[styles.icon, {marginRight: 8}]}
         />
         <Icon
           onPress={() => logoutHandler()}

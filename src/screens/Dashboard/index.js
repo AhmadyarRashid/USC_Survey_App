@@ -110,6 +110,9 @@ function Dashboard(props) {
     }
   }
 
+  const selectedStore = allStores.find(store => store.id == selectedStoreId)
+  console.log("selectedStore:", selectedStore)
+
   return (
     <Fragment style={{backgroundColor: 'white'}}>
       <HeaderComponent {...props} loadData={loadData}/>
@@ -144,13 +147,17 @@ function Dashboard(props) {
                 onChangeOption={storeId => setStoreId(storeId)}
               />
 
-              {Number(selectedStoreId) > -1
-              && <SingleOption
+              {!!selectedStore && <Text style={{
+                marginTop: 12, marginBottom: 12,
+                marginLeft:8, marginRight: 8,
+                width: "100%",
+              }}>Address: {selectedStore.address}</Text>}
+
+              <SingleOption
                 selectedOption={company}
                 setOption={setCompany}
                 store={stores.find(store => store.id === selectedStoreId)}
-              />}
-
+              />
               <View style={{marginTop: 20}}>
                 <Button
                   onPress={() => props.navigation.navigate("Review", {

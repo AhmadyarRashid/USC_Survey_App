@@ -9,7 +9,7 @@ function SelectOption({
   const {ptclLocked = "false", nrtcLocked = "false", erpLocked = "false"} = store
   return (
     <View style={styles.row}>
-      {ptclLocked === "false" && <Button
+      {(ptclLocked === "false" || ptclLocked === null) && <Button
         onPress={() => setOption("ptcl")}
         style={styles.button}
         block={selectedOption === "ptcl"}
@@ -19,7 +19,7 @@ function SelectOption({
         <Text>PTCL</Text>
       </Button>}
 
-      {nrtcLocked === "false" && <Button
+      {(nrtcLocked === "false" || nrtcLocked === null) && <Button
         onPress={() => setOption("nrtc")}
         style={styles.button}
         block={selectedOption === "nrtc"}
@@ -29,7 +29,7 @@ function SelectOption({
         <Text>NRTC</Text>
       </Button>}
 
-      {erpLocked === "false" && <Button
+      {(erpLocked === "false" || erpLocked === null) && <Button
         onPress={() => setOption("erp")}
         style={styles.button}
         block={selectedOption === "erp"}
